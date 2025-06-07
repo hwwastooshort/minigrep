@@ -50,4 +50,17 @@ Pick three.";
 
         assert_eq!(vec!["safe, fast, productive."], search(query, contents));
     }
+    #[test]
+    fn two_resuls() {
+        let query = "u";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(
+            vec!["Rust:", "safe, fast, productive."],
+            search(query, contents)
+        );
+    }
 }
