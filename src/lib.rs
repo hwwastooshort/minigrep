@@ -1,6 +1,7 @@
 use std::env;
 use std::error::Error;
 use std::fs;
+use std::path::PathBuf;
 
 pub struct Config {
     pub query: String,
@@ -16,6 +17,12 @@ impl Config {
 
         let query = args[1].clone();
         let file_path = args[2].clone();
+        let path = PathBuf::from(&file_path);
+
+        match !path.is_file() {
+            true => return Err("{filepath} is not a file"),
+            false => (),
+        }
 
         let ignore_case = env::var("IGNORE_CASE").is_ok();
 
@@ -87,7 +94,7 @@ Pick three.";
     #[test]
     fn case_insensitive() {
         let query = "rUsT";
-        let contents = "\
+        let contents: &'static str = "\
 Rust:
 safe, fast, productive.
 Pick three.
